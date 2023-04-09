@@ -1,9 +1,9 @@
 addarc <- function(net, nodeName, vertexNum){
   from = sample(1 : vertexNum * 3, 1, replace = TRUE)
   to = sample((2 * vertexNum + 1) : (3 * vertexNum), 1, replace = TRUE)
-  # from + 2 * vertexNum == to || from + vertexNum == to || 
+  # from + 2 * vertexNum == to from + vertexNum == to || 
   if(from == to){
-    return(net)
+    return(n et)
   }
 
   if(from > 2 * vertexNum){
@@ -23,7 +23,7 @@ addarc <- function(net, nodeName, vertexNum){
 
 delarc <- function(net, nodeName, vertexNum){
   e = empty.graph(nodeName)
-  len = length(net[["arcs"]]) / 2
+  len = length(net[[arcs]]) / 2
   if(len == 0){
     return(net)
   }
@@ -58,12 +58,12 @@ revarc <- function(net, nodeName, vertexNum){
   t = STM[from, to]
   STM[from, to] = STM[to, from]
   STM[to, from] = t
-  # print(from)
-  # print(to)
+  print(from)
+  print(to)
   if(checkCircleInMat(STM, vertexNum)){
     return(net)
   }
-  return(threeMats2bn(SM, FM, STM, nodeName, vertexNum))
+  return(threeMats2bn(SM, FM, STM, node_Name, vertexNum))
 }
 
 multiarc <- function(net, NodeName, vertexNum){
@@ -124,55 +124,12 @@ SimulatedAnnealing <- function(xdata, pearson, lasso, NodeName, vertexNum, m, ga
   
 }
 
-IBIC <- function(net, xdata, pearson_Corr, lasso_Corr, vertexNum, m, gama){
-  
-  sum = score(net, xdata, type = 'bic-g')
-  if(m == 0){
-    return(sum)
-  }
-  #转换片内矩阵
-  staticMat = net2StaticMat(net, vertexNum)
-  #片内计算pearsonbenefit
-  for (i in 1 : vertexNum) {
-    for(j in 1 : vertexNum){
-      if(i == j){
-        next;
-      }
-      if(staticMat[i,j] == 1){
-        sum = sum + log(m * pearson_Corr[i,j] + gama)
-      }else{
-        sum = sum + log(m * (1 - pearson_Corr[i,j]) + gama) 
-      }
-    }
-  }
-  secondMat = net2SecondMat(net, vertexNum)
-  first_Mat = net2First_Mat(net, vertexNum)
-  for (i in 1:vertexNum) {
-    for(j in 1 : vertexNum){
-      if(i == j){
-        next
-      }
-      if(secondMat[i,j] == 1){
-        sum = sum + log(m * lasso_Corr[i,j] + gama)
-      }else{
-        sum = sum + log(m * (1 - lasso_Corr[i,j]) + gama)
-      }
-      if(first_Mat[i,j] == 1){
-        sum = sum + log(m * lasso_Corr[i + vertexNum, j] + gama)
-      }else{
-        sum = sum + log(m * (1 - lasso_Corr[i + vertexNum, j]) + gama)
-      }
-    }
-  }
-  return(sum)
-}
 
 SA <- function(xdata, pearson, lasso, NodeName, vertexNum, m, gama){
   myres0 = SimulatedAnnealing(xdata, xdata_Corr, lassoCorr, NodeName, vertexNum, m, gama)
   print(myres0[['arcs']])
   resMat = resultMat(net2SecondMat(myres0, vertexNum), net2First_Mat(myres0, vertexNum), net2StaticMat(myres0, vertexNum), vertexNum)
   print(resMat)
-  r0 = calResult(resMat, Goldmat, vertexNum)
   print(r0)
   return(myres0)
 }
