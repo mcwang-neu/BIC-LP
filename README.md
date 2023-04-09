@@ -1,6 +1,6 @@
 # BIC-LP
 
-## BIC-LP is a hybrid dynamic Bayesian network score function for Gene Regulatory Network(GRN) Reconstruction.
+## BIC-LP is a hybrid dynamic Bayesian network score function for Gene Regulatory Network(GRN) reconstruction.
 
 GRNs are probabilistic and gene expression data contains data noise, which brings great challenges for the reverse engineering of GRN reconstruction. Dynamic Bayesian network is a excellent model for GRN reconstruction. However, using simple Bayesian-based score function always leads to many false positive/negetive edges. In others words, the score of the gold standard network is high but not the highest among any possible network. That is to say the score functions could be improved to make the gold standard network scores the highest as far as possible. Thus, the terms based on Linear regression and correlation are integrated into the BIC score function here, yielding BIC-LP score function.
 
