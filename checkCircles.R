@@ -44,10 +44,10 @@ getParentsNum <- function(graphs, nNode)
 {
   ret = matrix(data = 0, nrow = 1, ncol = nNode)
   
-  j = 1
-  while(j <= nNode){
-    i = 1
-    while(i <= nNode){
+  i = 1
+  while(i <= nNode){
+    j = 1
+    while(j <= nNode){
       if(graphs[i,j] == 1){
         ret[j] = ret[j] + 1
       }
