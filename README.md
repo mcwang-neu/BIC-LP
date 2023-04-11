@@ -7,7 +7,7 @@ GRNs are probabilistic and gene expression data contains data noise, which bring
 Experimental results on both synthetic and real-world datasets show that BIC-LP can reasonably eliminate some false positive edges while retaining most true positive edges, so as to achieve better GRN reconstruction performance. 
 
 ## Contact
-To some special issues, The codes updated would be checked and updated again after our paper is accepted. If you have any question, don't hesitate to contact us: 
+If you have any question, don't hesitate to contact us: 
 
 *Prof.* Wang. wangzq@bmie.neu.edu.cn\
 *Prof.* Xin. xinjunchang@mail.neu.edu.cn\
