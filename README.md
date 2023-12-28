@@ -6,6 +6,10 @@ GRNs are probabilistic and gene expression data contains data noise, which bring
 
 Experimental results on both synthetic and real-world datasets show that BIC-LP can reasonably eliminate some false positive edges while retaining most true positive edges, so as to achieve better GRN reconstruction performance. 
 
+## Data Preparation
+
+Before conducting BIC-LP, you need to generate two types of coefficients, Lasso linear Regrassion coefficients (LRC) and Pearson's correlation coefficients (PCC). Current version of BIC-LP supports only second-order Markov. Thus, the size LRC matrix should be 2*p \times p. The element {e}_{ij} means the relationship between $i$ and $j$, where $i$ comes from t-1 or t-2 time stamp and $j$ comes from the time stamp of t.
+
 ## Contact
 If you have any question, don't hesitate to contact us: 
 
