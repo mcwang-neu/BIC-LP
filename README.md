@@ -19,7 +19,7 @@ Sheet1: time-series gene expression data
 
 Sheet2: gold standard network
 
-Sheet3: M<sub>LRC<\sub> (Switched)
+Sheet3: M<sub>LRC </sub> (Switched)
 
 Sheet4: PCC 
 
