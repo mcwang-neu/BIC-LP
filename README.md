@@ -10,6 +10,15 @@ Experimental results on both synthetic and real-world datasets show that BIC-LP 
 
 Before conducting BIC-LP, you need to generate two types of coefficients, Lasso linear Regrassion coefficients (LRC) and Pearson's correlation coefficients (PCC). Current version of BIC-LP supports only second-order Markov. Thus, the size LRC matrix should be 2*p × p. The element _e<sub>ij </sub>_ means the relationship between _i_ and _j_, where _i_ comes from _t_-1 or _t_-2 time stamp and _j_ comes from the time stamp of _t_. And you need to switch the non-zero elements in _M<sub>LRC </sub>_ to range(0.5, 1) via any tool. 
 
+Then calculate the PCC of genes within the same time stamp. 
+> B = corrcoef(gene_expression_data)   % MATLAB
+
+As the input file of BIC-LP, "10-1.xlsx" contains 4 sheets:
+Sheet1: time-series gene expression data
+Sheet2: gold standard network
+Sheet3: M<sub>LRC<\sub> (Switched)
+Sheet4: PCC 
+
 ## Contact
 If you have any question, don't hesitate to contact us: 
 
