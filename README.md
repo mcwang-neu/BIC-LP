@@ -8,7 +8,7 @@ Experimental results on both synthetic and real-world datasets show that BIC-LP 
 
 ## Data Preparation
 
-Before conducting BIC-LP, you need to generate two types of coefficients, Lasso linear Regrassion coefficients (LRC) and Pearson's correlation coefficients (PCC). Current version of BIC-LP supports only second-order Markov. Thus, the size LRC matrix should be 2*p × p. The element e<sub>ij <\sub> means the relationship between _i_ and _j_, where _i_ comes from _t_-1 or _t_-2 time stamp and _j_ comes from the time stamp of _t_. And you need to switch the non-zero elements in M<sub>LRC <\sub> to range(0.5, 1) via any tool you like. 
+Before conducting BIC-LP, you need to generate two types of coefficients, Lasso linear Regrassion coefficients (LRC) and Pearson's correlation coefficients (PCC). Current version of BIC-LP supports only second-order Markov. Thus, the size LRC matrix should be 2*p × p. The element e<sub>ij </sub> means the relationship between _i_ and _j_, where _i_ comes from _t_-1 or _t_-2 time stamp and _j_ comes from the time stamp of _t_. And you need to switch the non-zero elements in M<sub>LRC </sub> to range(0.5, 1) via any tool you like. 
 
 ## Contact
 If you have any question, don't hesitate to contact us: 
