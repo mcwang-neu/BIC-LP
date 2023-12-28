@@ -15,13 +15,13 @@ Then calculate the PCC of genes within the same time stamp.
 
 As the input file of BIC-LP, "10-1.xlsx" contains 4 sheets:
 
-&nbsp;Sheet1: time-series gene expression data
+&nbsp;&nbsp;&nbsp;&nbsp;Sheet1: time-series gene expression data
 
-&nbsp;Sheet2: gold standard network
+&nbsp;&nbsp;&nbsp;&nbsp;Sheet2: gold standard network
 
-&nbsp;Sheet3: M<sub>LRC </sub> (Switched)
+&nbsp;&nbsp;&nbsp;&nbsp;Sheet3: M<sub>LRC </sub> (Switched)
 
-&nbsp;Sheet4: PCC 
+&nbsp;&nbsp;&nbsp;&nbsp;Sheet4: PCC 
 
 ## Contact
 If you have any question, don't hesitate to contact us: 
