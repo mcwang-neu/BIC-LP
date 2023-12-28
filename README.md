@@ -23,6 +23,10 @@ As the input file of BIC-LP, "10-1.xlsx" contains 4 sheets:
 
 &nbsp;&nbsp;&nbsp;&nbsp;Sheet4: PCC 
 
+## Run
+
+Run demo.R to search the best-fit HO-DBN, thereby searching the best-fit GRN. SA is applied in BIC-LP, since it is proved to infinitely close to the optimal solution given perfect condition. Thus, some parameters in simulated annealing needs changing if the number of genes of your dataset is too small or large. It should be noticed that the BIC score implemented by 'bnlearn' is a little different from the widely accepted one, because the larger bic means the fitter as is maden clear in the document of 'bnlearn'. Do not misunderstand our codes.
+
 ## Contact
 If you have any question, don't hesitate to contact us: 
 
