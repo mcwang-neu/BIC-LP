@@ -27,6 +27,12 @@ As the input file of BIC-LP, "10-1.xlsx" contains 4 sheets:
 
 Run demo.R to search the best-fit HO-DBN, thereby searching the best-fit GRN. SA is applied in BIC-LP, since it is proved to infinitely close to the optimal solution given perfect condition. Thus, some parameters in simulated annealing needs changing if the number of genes of your dataset is too small or large. It should be noticed that the BIC score implemented by 'bnlearn' is a little different from the widely accepted one, because the larger bic means the fitter as is maden clear in the document of 'bnlearn'. Do not misunderstand our codes.
 
+## Citation
+
+If you find BIC-LP useful, or compare your work with ours, you are more than welcomed to cite our paper:
+
+> X. J. Xin, M. C. Wang, L. X. Qu, Q. Chen, W. Y. Q. Wang, Z. Q. Wang*, "BIC-LP: a hybrid higher-order dynamic Bayesian network score function for gene regulatory network reconstruction,"  _IEEE/ACM Transactions on Computational Biology and Bioinformatics_, early access, 2023.
+
 ## Contact
 If you have any question, don't hesitate to contact us: 
 
