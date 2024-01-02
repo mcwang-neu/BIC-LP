@@ -219,6 +219,149 @@ changeRegulator <- function(net, SecondMat, First_Mat, StaticMat, nodeName, vert
   return(threeMats2bn(SecondMat, First_Mat, StaticMat, nodeName, vertexNum))
 }
 
+SimulatedAnnealing <- function(xdata, pearson, lasso, NodeName, vertexNum, m, gama){
+  
+  L = 150     # 当前温度下的迭代次数
+  k = 0.1   # 衰减参数
+  Ts = 100
+  Te = 0.0001
+  
+  
+  SecondMat = randomMat(vertexNum)
+  First_Mat = randomMat(vertexNum)
+  StaticMat = randomMat(vertexNum)
+  while(checkCircleInMat(StaticMat, vertexNum)){
+    StaticMat = randomMat(vertexNum)
+  }
+  Net = threeMats2bn(SecondMat, First_Mat, StaticMat, NodeName, vertexNum)
+  score0 = 0
+  while(Ts > Te){
+    
+    Ts = Ts * k
+    print(Ts)
+    for(i in 1 : L){
+      
+      SecondMat = net2SecondMat(Net, vertexNum)
+      First_Mat = net2First_Mat(Net, vertexNum)
+      StaticMat = net2StaticMat(Net, vertexNum)
+      
+      score0 = IBIC(Net, xdata, pearson, lasso, vertexNum, m, gama)
+      
+      flag = sample(0:4, 1, replace = TRUE);
+      if(flag == 0){
+        # add
+        addNet = add(Net, SecondMat, First_Mat, StaticMat, NodeName, vertexNum)
+        scorea = IBIC(addNet, xdata, pearson, lasso, vertexNum, m, gama)
+        if(scorea > score0){
+          Net = addNet;
+        }else{
+          if(exp((scorea - score0) / Ts) > runif(1, 0, 1)){
+            Net = addNet;
+          }
+        }
+      }else if(flag == 1){
+        # del
+        delNet = del(Net, NodeName, vertexNum)
+        scoreb = IBIC(delNet, xdata, pearson, lasso, vertexNum, m, gama)
+        if(scoreb > score0){
+          Net = delNet
+        }else{
+          if(exp((scoreb - score0) / Ts) > runif(1, 0, 1)){
+            Net = delNet;
+          }
+        }
+      }else if(flag == 2){
+        # rev
+        revNet = rev(Net, SecondMat, First_Mat, StaticMat, NodeName, vertexNum)
+        scorec = IBIC(revNet, xdata, pearson, lasso, vertexNum, m, gama)
+        if(scorec > score0){
+          Net = revNet
+        }else{
+          if(exp((scorec - score0) / Ts) > runif(1, 0, 1)){
+            Net = revNet;
+          }
+        }
+      }else if(flag == 3){
+        # cht
+        chtNet = changeTarget(Net, SecondMat, First_Mat, StaticMat, NodeName, vertexNum)
+        scored = IBIC(chtNet, xdata, pearson, lasso, vertexNum, m, gama)
+        if(scored > score0){
+          Net = chtNet
+        }else{
+          if(exp((scored - score0) / Ts) > runif(1, 0, 1)){
+            Net = chtNet;
+          }
+        }
+      }else{
+        # chr
+        chrNet = changeRegulator(Net, SecondMat, First_Mat, StaticMat, NodeName, vertexNum)
+        scoree = IBIC(chrNet, xdata, pearson, lasso, vertexNum, m, gama)
+        if(scoree > score0){
+          Net = chrNet
+        }else{
+          if(exp((scoree - score0) / Ts) > runif(1, 0, 1)){
+            Net = chrNet;
+          }
+        }
+      }
+    }
+  }
+  return(Net)
+}
+
+IBIC <- function(net, xdata, pearson_Corr, lasso_Corr, vertexNum, m, gama){
+  
+  sum = score(net, xdata, type = 'aic-g')
+  if(m == 0){
+    return(sum)
+  }
+  #转换片内矩阵
+  staticMat = net2StaticMat(net, vertexNum)
+  #片内计算pearsonbenefit
+  for (i in 1 : vertexNum) {
+    for(j in 1 : vertexNum){
+      if(i == j){
+        next;
+      }
+      if(staticMat[i,j] == 1){
+        sum = sum + log(m * pearson_Corr[i,j] + gama)
+      }else{
+        sum = sum + log(m * (1 - pearson_Corr[i,j]) + gama) 
+      }
+    }
+  }
+  
+  secondMat = net2SecondMat(net, vertexNum)
+  first_Mat = net2First_Mat(net, vertexNum)
+  for (i in 1:vertexNum) {
+    for(j in 1 : vertexNum){
+      if(i == j){
+        next
+      }
+      if(secondMat[i,j] == 1){
+        sum = sum + log(m * lasso_Corr[i,j] + gama)
+      }else{
+        sum = sum + log(m * (1 - lasso_Corr[i,j]) + gama)
+      }
+      if(first_Mat[i,j] == 1){
+        sum = sum + log(m * lasso_Corr[i + vertexNum, j] + gama)
+      }else{
+        sum = sum + log(m * (1 - lasso_Corr[i + vertexNum, j]) + gama)
+      }
+    }
+  }
+  return(sum)
+}
+
+
+SA <- function(xdata, pearson, lasso, NodeName, vertexNum, m, gama){
+  myres0 = SimulatedAnnealing(xdata, xdata_Corr, lassoCorr, NodeName, vertexNum, m, gama)
+  print(myres0[['arcs']])
+  resMat = resultMat(net2SecondMat(myres0, vertexNum), net2First_Mat(myres0, vertexNum), net2StaticMat(myres0, vertexNum), vertexNum)
+  r0 = calResult(resMat, Goldmat, vertexNum)
+  print(r0)
+  return(myres0)
+}
 
 
 SA <- function(xdata, pearson, lasso, NodeName, vertexNum, m, gama){
